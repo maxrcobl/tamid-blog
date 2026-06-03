@@ -3,6 +3,8 @@ from .models import Post
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic.edit import FormView
 
 # Create your views here.
 
@@ -40,3 +42,11 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'blog/post_confirm_delete.html'
     success_url = reverse_lazy('post-list')
     
+class RegisterView(FormView):
+    template_name = 'blog/register.html'
+    form_class = UserCreationForm
+    scucess_url = reverse_lazy('post-list')
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
