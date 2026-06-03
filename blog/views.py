@@ -17,12 +17,13 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
-    context_obect_name = 'post'
+    context_object_name = 'post'
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    template_name = 'blog/postform.html'
-    fields = ['title', 'is_public', 'tags', 'image']
+    template_name = 'blog/post_form.html'
+    fields = ['title', 'content', 'is_public', 'tags', 'image']
+    success_url = reverse_lazy('post-list')
     
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -31,10 +32,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'blog/post_form.html'
-    fields = ['title', 'is_public', 'tags', 'image']
+    fields = ['title', 'content', 'is_public', 'tags', 'image']
+    success_url = reverse_lazy('post-list')
 
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
-    template_name = 'blog/post_confirm/delete.html'
+    template_name = 'blog/post_confirm_delete.html'
     success_url = reverse_lazy('post-list')
     
