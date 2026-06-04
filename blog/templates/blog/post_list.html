@@ -24,7 +24,9 @@
     {% for post in posts %}
         <div class="card mb-3">
             <div class="card-body">
-                <h2 class="card-title">{{post.title}}</h2>
+                <h2 class="card-title">
+                    <a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a>
+                </h2>
                 <p class="text-muted">By {{post.author}} | {{post.created_at}}</p>
                 <p>{{ post.content|truncatewords:30 }}</p>
                 <div>

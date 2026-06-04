@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -15,3 +18,6 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='post_images/', blank=True)
+
+    def __str__(self):
+        return self.title
