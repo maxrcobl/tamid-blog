@@ -1,0 +1,1 @@
+web: gunicorn tamid_blog.wsgi
