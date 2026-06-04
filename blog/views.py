@@ -14,7 +14,20 @@ class PostListView(ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        return Post.objects.filter(is_public=True)
+        queryset = Post.objects.filter(is_public=True)
+        
+        query = self.request.GET.get('q')
+        tag = self.request.GET.get('tag')
+        author = self.request.GET.get('author')
+
+        if query:
+            queryset = queryset.filter(title__icontains=query)
+        if tag:
+            queryset = queryset.filter(tags__name__icontains=tag)
+        if author:
+            queryset = queryset.filter(author__username__icontains=author)
+        
+        return queryset
     
 class PostDetailView(DetailView):
     model = Post
@@ -50,3 +63,4 @@ class RegisterView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
